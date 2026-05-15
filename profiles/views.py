@@ -5,6 +5,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from feed.models import Post
 from django.http import JsonResponse, HttpResponseBadRequest
 from followers.models import Follower
+from django.shortcuts import redirect, render
+from .forms import UserProfileForm, ProfileImageForm
 
 # Create your views here.
 
@@ -64,4 +66,27 @@ class FollowView(LoginRequiredMixin, View):
     return JsonResponse({
       'success': True,
       'wording': "Unfollow" if data['action'] == "follow" else "Follow"
+    })
+  
+class EditProfileView(LoginRequiredMixin, View):
+  http_method_names = ["get", "post"]
+
+  def get(self, request):
+    user_form = UserProfileForm(instance=request.user)
+    profile_form = ProfileImageForm(instance=request.user.profile)
+    return render(request, 'profiles/edit.html', {
+      'user_form': user_form,
+      'profile_form': profile_form,
+    })
+  
+  def post(self, request):
+    user_form = UserProfileForm(request.POST, instance=request.user)
+    profile_form = ProfileImageForm(request.POST, request.FILES, instance=request.user.profile)
+    if user_form.is_valid() and profile_form.is_valid():
+      user_form.save()
+      profile_form.save()
+      return redirect('profiles:detail', username=request.user.username)
+    return render(request, 'profiles/edit.html', {
+      'user_form': user_form,
+      'profile_form': profile_form,
     })
