@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Profile{% endblock title %}
+
+{% block body %}
+<div class="max-wd-md mx-auto bg-white p-8 rounded shadow">
+  <h2 class="text-2xl font-bold mb-6">Edit Profile</h2>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="mb-4">
+      <label class="block text-gray-700">First Name</label>
+      {{ user_form.first_name }}
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700">First Name</label>
+      {{ user_form.last_name }}
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700">First Name</label>
+      {{ user_form.username }}
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700">First Name</label>
+      {{ profile_form.image }}
+    </div>
+
+    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Save Changes</button>
+
+  </form>
+
+  <hr class="my-6">
+  <a href="{% url 'account_change_password' %}" class="text-blue-500 hover:underline">Change Password</a>
+</div>
+
+{% endblock body %}
