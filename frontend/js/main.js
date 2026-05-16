@@ -85,4 +85,8 @@ $(document).on("click", ".js-toggle-modal", function(e) {
             console.warn(error)
         }
     });
-})
+});
+
+$("#menu-toggle").on("click", function() {
+  $("#nav-menu").toggleClass("hidden");
+});
