@@ -45,6 +45,21 @@
             </a>
           </li>
           {% endif %}
+          <li class="border-t border-gray-200 mt-2 pt-2">
+            <span class="flex flex-row items-center h-12 text-gray-400 text-xs font-semibold uppercase tracking-wider px-4">Account</span>
+          </li>
+          <li>
+            <a href="{% url 'profiles:edit' %}" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+              <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-user-circle"></i></span>
+              <span class="text-sm font-medium">Edit Profile</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'account_change_password' %}" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+              <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-key"></i></span>
+              <span class="text-sm font-medium">Change Password</span>
+            </a>
+          </li>
         </ul>
       </div>
       <div class="p-16">
@@ -86,7 +101,7 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{% static 'js/main.js' %}"></script>
-
+    {% block extra_js %}{% endblock extra_js %}
   </body>
 </html>
 

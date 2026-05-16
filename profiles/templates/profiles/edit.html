@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load static %}
+{% load thumbnail %}
 
 {% block title %}Edit Profile{% endblock title %}
 
@@ -14,16 +16,28 @@
       {{ user_form.first_name }}
     </div>
     <div class="mb-4">
-      <label class="block text-gray-700">First Name</label>
+      <label class="block text-gray-700">Last Name</label>
       {{ user_form.last_name }}
     </div>
     <div class="mb-4">
-      <label class="block text-gray-700">First Name</label>
+      <label class="block text-gray-700">Username</label>
       {{ user_form.username }}
     </div>
     <div class="mb-4">
-      <label class="block text-gray-700">First Name</label>
-      {{ profile_form.image }}
+      <label class="block text-gray-700 mb-2">Profile Picture</label>
+      {% if request.user.profile.image %}
+        {% thumbnail request.user.profile.image "150x150" crop="center" as im %}
+          <img src="{{ im.url }}" class="rounded-full w-24 h-24 object-cover mb-2" id="profile-preview">
+        {% endthumbnail %}
+      {% else %}
+        <div class="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center text-gray-500 mb-2">
+          No photo
+        </div>
+      {% endif %}
+      <label for="id_image" class="cursor-pointer bg-white border border-gray-300 text-gray-700 px-3 py-1 rounded text-sm hover:bg-gray-50">
+        Change Profile Picture
+      </label>
+      <input type="file" name="image" accept="image/*" id="id_image" class="hidden">
     </div>
 
     <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Save Changes</button>
@@ -35,3 +49,6 @@
 </div>
 
 {% endblock body %}
+{% block extra_js %}
+<script src="{% static 'js/editHTML.js' %}"></script>
+{% endblock extra_js %}
