@@ -1,7 +1,9 @@
+from django.views import View
 from django.views.generic import DetailView, TemplateView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.http import HttpResponseForbidden
+from django.shortcuts import render, redirect, get_object_or_404
 from followers.models import Follower
 from .models import Post
 # from django.shortcuts import render
@@ -68,3 +70,13 @@ class CreateNewPost(LoginRequiredMixin, CreateView):
       },
       content_type="application/html"
     )
+
+class DeletePostView(LoginRequiredMixin, View):
+  http_method_names = ["post"]
+  
+  def post(self, request, *args, **kwargs):
+    post = get_object_or_404(Post, pk=kwargs['pk'])
+    if post.author != request.user:
+      return HttpResponseForbidden("You can't delete someone else's post.")
+    post.delete()
+    return redirect('feed:index')
