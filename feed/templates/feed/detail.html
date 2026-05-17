@@ -2,5 +2,7 @@
 
 {% block title %} {{ post.text }} by {{ post.author.username }}{% endblock title %}
 {% block body %}
-  {% include "includes/post.html" with post=post %}
+  <div class="flex items-center justify-center min-h-[60vh]">
+    {% include "includes/post.html" with post=post %}
+  </div>
 {% endblock body %}

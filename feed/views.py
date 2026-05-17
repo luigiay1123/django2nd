@@ -80,3 +80,11 @@ class DeletePostView(LoginRequiredMixin, View):
       return HttpResponseForbidden("You can't delete someone else's post.")
     post.delete()
     return redirect('feed:index')
+  
+class MyPostView(LoginRequiredMixin, TemplateView):
+  template_name = "feed/my_posts.html"
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context['posts'] = Post.objects.filter(author=self.request.user).order_by('-id') 
+    return context

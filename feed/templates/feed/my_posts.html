@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}My Posts{% endblock title %}
+
+{% block body %}
+  <div id="posts_container">
+    {% for post in posts %}
+      {% include "includes/post.html" with post=post show_detail_link=True %}
+    {% empty %}
+      <div class="text-center text-gray-500 mt-10">You haven't posted anything yet.</div>
+    {% endfor %}
+  </div>
+{% endblock body %}
